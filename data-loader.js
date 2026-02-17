@@ -181,15 +181,52 @@ async function loadVideos() {
 // 加载并渲染AI应用
 async function loadApps() {
   try {
+    console.log('📱 开始加载 AI 应用数据...');
     const response = await fetch('./data/apps.json');
-    const data = await response.json();
-    const appsGrid = document.querySelector('.apps-grid');
+    console.log('📱 apps.json 响应状态:', response.status);
 
-    if (appsGrid && data.apps) {
-      appsGrid.innerHTML = data.apps.map(app => generateAppCard(app)).join('');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const data = await response.json();
+    console.log('📱 成功解析 apps.json:', data);
+    console.log('📱 应用数量:', data.apps ? data.apps.length : 0);
+
+    const appsGrid = document.querySelector('.apps-grid');
+    console.log('📱 找到 apps-grid 元素:', appsGrid);
+
+    if (!appsGrid) {
+      console.error('❌ 错误:未找到 .apps-grid 元素!');
+      return;
+    }
+
+    if (!data.apps || data.apps.length === 0) {
+      console.warn('⚠️ 警告:apps.json 中没有应用数据');
+      return;
+    }
+
+    const cardsHTML = data.apps.map(app => generateAppCard(app)).join('');
+    console.log('📱 生成的 HTML 长度:', cardsHTML.length);
+    appsGrid.innerHTML = cardsHTML;
+    console.log('✅ AI 应用加载完成!共 ' + data.apps.length + ' 个应用');
+
+    // 触发 reveal 动画:让新添加的应用卡片显示出来
+    setTimeout(() => {
+      const appCards = document.querySelectorAll('.app-card.reveal');
+      appCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 100); // 每个卡片延迟 100ms,产生依次出现的效果
+      });
+      console.log('✅ 已触发应用卡片显示动画');
+    }, 100);
+
   } catch (error) {
-    console.error('加载AI应用失败:', error);
+    console.error('❌ 加载AI应用失败:', error);
+    console.error('错误类型:', error.name);
+    console.error('错误信息:', error.message);
+    console.error('完整错误:', error);
   }
 }
 
