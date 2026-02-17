@@ -220,6 +220,12 @@ async function loadApps() {
         }, index * 100); // 每个卡片延迟 100ms,产生依次出现的效果
       });
       console.log('✅ 已触发应用卡片显示动画');
+
+      // 重新应用当前语言设置(因为卡片是动态加载的)
+      if (typeof switchLanguage === 'function' && typeof currentLang !== 'undefined') {
+        switchLanguage(currentLang);
+        console.log('✅ 已重新应用语言设置:', currentLang);
+      }
     }, 100);
 
   } catch (error) {
