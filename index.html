@@ -1488,6 +1488,11 @@ footer {
     padding: 4px 10px;
     font-size: 0.7rem;
   }
+
+  /* 移动端动画优化 - 减小模糊以提升性能 */
+  .orb {
+    filter: blur(40px);
+  }
 }
 @media (max-width: 900px) {
   .video-grid { grid-template-columns: 1fr; }
