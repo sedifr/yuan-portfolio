@@ -1463,6 +1463,32 @@ footer {
 @media (max-width: 1200px) {
   .video-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* 移动端小屏幕优化 - 隐藏导航链接 */
+@media (max-width: 640px) {
+  .nav-inner {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .nav-brand {
+    font-size: 0.9rem;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: none; /* 在小屏幕隐藏导航链接 */
+  }
+  .lang-pills {
+    gap: 1px;
+    padding: 2px;
+  }
+  .lang-pill {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+  }
+}
 @media (max-width: 900px) {
   .video-grid { grid-template-columns: 1fr; }
   .video-card.portrait { grid-row: span 1; }
@@ -1476,7 +1502,8 @@ footer {
 }
 @media (max-width: 768px) {
   .nav-inner { padding: 0 20px; }
-  .nav-links { gap: 16px; }
+  .nav-links { gap: 12px; font-size: 0.8rem; }
+  .nav-brand { font-size: 0.95rem; }
   .hero { padding: 120px 20px 80px; }
   .hero-wrapper { padding-bottom: 60px; }
   .hero-content { grid-template-columns: 1fr; gap: 40px; }
