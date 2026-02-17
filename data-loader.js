@@ -7,8 +7,22 @@ function getCurrentLanguage() {
   if (typeof getCurrentLang === 'function') {
     return getCurrentLang();
   }
-  // 如果没有全局函数，从localStorage读取
-  return localStorage.getItem('language') || 'ja';
+  // 如果没有全局函数，从localStorage读取（兼容新旧key）
+  return localStorage.getItem('preferredLanguage') || localStorage.getItem('language') || 'ja';
+}
+
+function getLangValue(textObj, lang, fallback = '') {
+  if (!textObj) return fallback;
+  if (typeof textObj === 'string') return textObj;
+  return textObj[lang] || textObj.zh || textObj.en || textObj.ja || fallback;
+}
+
+function escapeAttribute(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 // 获取多语言文本（兼容新旧格式）
@@ -109,6 +123,9 @@ function generateVideoCard(video) {
 function generateAppCard(app) {
   const hasLink = app.link;
   const name = getText(app.name, 'Untitled App');
+  const nameJa = getLangValue(app.name, 'ja', name);
+  const nameZh = getLangValue(app.name, 'zh', name);
+  const nameEn = getLangValue(app.name, 'en', name);
   let cardHTML = `<div class="app-card reveal${hasLink ? ' app-card-clickable' : ''}" style="transition-delay:${app.delay}s"`;
 
   if (hasLink) {
@@ -144,7 +161,7 @@ function generateAppCard(app) {
     </div>
     <div class="app-body">
       <div class="app-type" data-i18n="app.${app.id}.type">${app.type === 'webapp' ? 'AI ウェブアプリ' : app.type === 'suite' ? '映像制作スイート' : app.type === 'native' ? 'macOS ネイティブアプリ' : 'Claude Code スキル'}</div>
-      <div class="app-name">${name}</div>
+      <div class="app-name" data-app-name-ja="${escapeAttribute(nameJa)}" data-app-name-zh="${escapeAttribute(nameZh)}" data-app-name-en="${escapeAttribute(nameEn)}">${name}</div>
       <div class="app-desc" data-i18n="app.${app.id}.desc"></div>
       <div class="app-tags">`;
 
