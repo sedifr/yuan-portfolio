@@ -461,7 +461,32 @@ nav {
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.video-thumb-wrap.gallery-slider .video-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: none;
+  will-change: transform;
+}
+.video-thumb-wrap.gallery-slider {
+  transform: translateZ(0);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.video-thumb-wrap.gallery-slider .video-thumb-main {
+  z-index: 1;
+  transform: translateX(0);
+}
+.video-thumb-wrap.gallery-slider .video-thumb-slide {
+  z-index: 2;
+  transform: translateX(100%);
+  pointer-events: none;
+}
 .video-card:hover .video-thumb {
+  transform: scale(1.04);
+}
+.video-card.image-only:hover .video-thumb-wrap.gallery-slider {
   transform: scale(1.04);
 }
 .play-btn {
@@ -643,6 +668,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: pan-y;
 }
 .lightbox-img {
   max-width: 90vw;
@@ -1804,6 +1830,8 @@ footer {
 let lightboxImages = [];
 let lightboxIndex = 0;
 let lightboxTitle = '';
+let lightboxTouchStartX = 0;
+let lightboxTouchStartY = 0;
 
 function openLightbox(images, title, startIndex) {
   lightboxImages = images;
@@ -1838,6 +1866,43 @@ function lightboxNext() {
   lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
   updateLightbox();
 }
+
+function handleLightboxTouchStart(e) {
+  if (lightboxImages.length <= 1 || !document.getElementById('lightbox').classList.contains('active')) {
+    return;
+  }
+
+  const touch = e.changedTouches[0];
+  lightboxTouchStartX = touch.clientX;
+  lightboxTouchStartY = touch.clientY;
+}
+
+function handleLightboxTouchEnd(e) {
+  if (lightboxImages.length <= 1 || !document.getElementById('lightbox').classList.contains('active')) {
+    return;
+  }
+
+  const touch = e.changedTouches[0];
+  const deltaX = touch.clientX - lightboxTouchStartX;
+  const deltaY = touch.clientY - lightboxTouchStartY;
+  const absX = Math.abs(deltaX);
+  const absY = Math.abs(deltaY);
+  const swipeThreshold = 50;
+
+  if (absX < swipeThreshold || absX <= absY) {
+    return;
+  }
+
+  if (deltaX < 0) {
+    lightboxNext();
+  } else {
+    lightboxPrev();
+  }
+}
+
+const lightboxElement = document.getElementById('lightbox');
+lightboxElement.addEventListener('touchstart', handleLightboxTouchStart, { passive: true });
+lightboxElement.addEventListener('touchend', handleLightboxTouchEnd, { passive: true });
 // Close on backdrop click
 document.getElementById('lightbox').addEventListener('click', function(e) {
   if (e.target === this || e.target.classList.contains('lightbox-content')) closeLightbox();

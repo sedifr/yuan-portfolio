@@ -262,36 +262,95 @@ function initializeGalleries() {
     const thumb = card.querySelector('.video-thumb');
     const dots = card.querySelectorAll('.gallery-dot');
     const images = JSON.parse(card.getAttribute('data-images'));
+
+    if (!thumbWrap || !thumb || !images || images.length === 0) {
+      return;
+    }
+
     let currentIndex = 0;
     let autoSlideInterval;
+    let isAnimating = false;
+    const slideDuration = 420;
+
+    thumbWrap.classList.add('gallery-slider');
+    thumb.classList.add('video-thumb-main');
+
+    const slideImg = document.createElement('img');
+    slideImg.className = 'video-thumb video-thumb-slide';
+    slideImg.alt = thumb.alt || '';
+    slideImg.src = images[currentIndex];
+    slideImg.setAttribute('aria-hidden', 'true');
+    thumbWrap.insertBefore(slideImg, thumb.nextSibling);
+
+    function updateDots(index) {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function slideTo(targetIndex, direction = 1) {
+      if (isAnimating || targetIndex === currentIndex || !images[targetIndex]) {
+        return;
+      }
+
+      isAnimating = true;
+      const easing = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
+
+      slideImg.src = images[targetIndex];
+      slideImg.style.transition = 'none';
+      thumb.style.transition = 'none';
+      slideImg.style.transform = `translateX(${direction > 0 ? 100 : -100}%)`;
+      thumb.style.transform = 'translateX(0)';
+
+      // Force reflow so transition starts from prepared state
+      void slideImg.offsetWidth;
+
+      slideImg.style.transition = `transform ${slideDuration}ms ${easing}`;
+      thumb.style.transition = `transform ${slideDuration}ms ${easing}`;
+      slideImg.style.transform = 'translateX(0)';
+      thumb.style.transform = `translateX(${direction > 0 ? -100 : 100}%)`;
+
+      window.setTimeout(() => {
+        currentIndex = targetIndex;
+        thumb.src = images[currentIndex];
+        thumb.style.transition = 'none';
+        slideImg.style.transition = 'none';
+        thumb.style.transform = 'translateX(0)';
+        slideImg.style.transform = `translateX(${direction > 0 ? 100 : -100}%)`;
+        updateDots(currentIndex);
+        isAnimating = false;
+      }, slideDuration + 40);
+    }
 
     // 自动轮播
     function startAutoSlide() {
+      if (images.length <= 1) {
+        return;
+      }
+
+      stopAutoSlide();
+
       autoSlideInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateGallery();
+        const nextIndex = (currentIndex + 1) % images.length;
+        slideTo(nextIndex, 1);
       }, 3000);
     }
 
     function stopAutoSlide() {
       if (autoSlideInterval) {
         clearInterval(autoSlideInterval);
+        autoSlideInterval = null;
       }
     }
 
-    function updateGallery() {
-      thumb.src = images[currentIndex];
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentIndex);
-      });
-    }
+    updateDots(currentIndex);
 
     // 点击圆点切换
     dots.forEach((dot, index) => {
       dot.addEventListener('click', (e) => {
         e.stopPropagation();
-        currentIndex = index;
-        updateGallery();
+        const direction = index > currentIndex ? 1 : -1;
+        slideTo(index, direction);
         stopAutoSlide();
         startAutoSlide();
       });
