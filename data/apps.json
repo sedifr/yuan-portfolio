@@ -12,7 +12,12 @@
       "previewBg": "preview-1",
       "link": "https://fitfocus-ai-smart-body-transformation-658857762386.us-west1.run.app/",
       "isLive": true,
-      "tags": ["Gemini AI", "React", "TypeScript", "Computer Vision"],
+      "tags": [
+        "Gemini AI",
+        "React",
+        "TypeScript",
+        "Computer Vision"
+      ],
       "delay": 0
     },
     {
@@ -27,7 +32,12 @@
       "previewBg": "preview-2",
       "link": "https://nano-studio-658857762386.us-west1.run.app",
       "isLive": true,
-      "tags": ["Gemini AI", "Veo", "Video Gen", "Storyboard"],
+      "tags": [
+        "Gemini AI",
+        "Veo",
+        "Video Gen",
+        "Storyboard"
+      ],
       "delay": 0.1
     },
     {
@@ -40,7 +50,12 @@
       "type": "native",
       "icon": "🎙️",
       "previewBg": "preview-3",
-      "tags": ["Swift", "SwiftUI", "Speech Recognition", "Anthropic AI"],
+      "tags": [
+        "Swift",
+        "SwiftUI",
+        "Speech Recognition",
+        "Anthropic AI"
+      ],
       "delay": 0.2
     },
     {
@@ -55,7 +70,12 @@
       "previewBg": "preview-4",
       "link": "https://github.com/sedifr/skills",
       "badgeType": "github",
-      "tags": ["Skills CLI", "State Machine", "Workflow", "Image Gen"],
+      "tags": [
+        "Skills CLI",
+        "State Machine",
+        "Workflow",
+        "Image Gen"
+      ],
       "delay": 0.3
     }
   ]
