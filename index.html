@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>袁灏 | Portfolio Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', 'Noto Sans SC', 'Noto Sans JP', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+  color: #1a1a2e;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+::selection { background: rgba(59, 130, 246, 0.15); }
+
+/* ===== CSS VARIABLES ===== */
+:root {
+  --white: #ffffff;
+  --bg-light: #f8f9fc;
+  --bg-dark: #0a0a0f;
+  --text-primary: #1a1a2e;
+  --text-secondary: #64748b;
+  --text-light: #e8ecf4;
+  --text-muted-light: #94a3b8;
+  --accent: #3b82f6;
+  --accent-soft: rgba(59, 130, 246, 0.08);
+  --border: rgba(0, 0, 0, 0.06);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 8px 30px rgba(0,0,0,0.06);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,0.08);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-w: 1280px;
+}
+
+/* ===== NAVIGATION ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+.nav-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  position: relative;
+}
+.nav-links a:hover { color: var(--text-primary); }
+.nav-links a.active {
+  color: var(--text-primary);
+}
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+.lang-pills {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-light);
+  border-radius: 8px;
+  padding: 3px;
+}
+.lang-pill {
+  border: none; cursor: pointer;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  font-family: inherit;
+}
+.lang-pill.active {
+  background: var(--white);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* ===== HERO (Light + Ambient Animation) ===== */
+.hero-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 82%,
+    rgba(226, 232, 240, 1) 94%,
+    rgba(148, 163, 184, 0.95) 97%,
+    rgba(71, 85, 105, 0.85) 100%
+  );
+  padding-bottom: 0px;
+}
+
+/* Floating gradient orbs — visible ambient background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  will-change: transform;
+}
+.orb-1 {
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.45), transparent 70%);
+  top: -200px; right: -100px;
+  opacity: 1;
+  animation: orbFloat1 12s ease-in-out infinite;
+}
+.orb-2 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.38), transparent 70%);
+  bottom: -150px; left: -100px;
+  opacity: 0.95;
+  animation: orbFloat2 15s ease-in-out infinite;
+}
+.orb-3 {
+  width: 550px; height: 550px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+  top: 30%; left: 45%;
+  opacity: 0.9;
+  animation: orbFloat3 10s ease-in-out infinite;
+}
+.orb-4 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%);
+  top: 10%; left: 15%;
+  opacity: 0.85;
+  animation: orbFloat4 16s ease-in-out infinite;
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-100px, 70px) scale(1.15); }
+  50% { transform: translate(-50px, 120px) scale(0.9); }
+  75% { transform: translate(70px, 40px) scale(1.1); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(80px, -90px) scale(1.18); }
+  50% { transform: translate(120px, -40px) scale(0.85); }
+  75% { transform: translate(40px, -70px) scale(1.12); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  33% { transform: translate(-40%, -80px) scale(1.2); }
+  66% { transform: translate(-60%, 60px) scale(0.85); }
+}
+@keyframes orbFloat4 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(90px, -70px) scale(1.25); }
+}
+
+/* Animated mesh gradient background */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.06), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 20%, rgba(139, 92, 246, 0.05), transparent),
+    radial-gradient(ellipse 70% 60% at 60% 80%, rgba(56, 189, 248, 0.04), transparent);
+  animation: meshShift 20s ease-in-out infinite alternate;
+}
+@keyframes meshShift {
+  0% { filter: hue-rotate(0deg); opacity: 1; }
+  100% { filter: hue-rotate(15deg); opacity: 0.8; }
+}
+
+/* Dot grid overlay */
+.hero-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.07) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+/* Scan lines removed — was cutting through text */
+
+/* Canvas for interactive particles */
+#heroCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
+  padding: 160px 40px 120px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.hero-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+/* badge removed — personal info moved to About section */
+.hero-name {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  color: rgba(26, 26, 46, 0.15);
+  text-align: right;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #1a1a2e 30%, #3b82f6 70%, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-desc {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin-bottom: 40px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--transition);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background: #2d2d4a;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(26, 26, 46, 0.2);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid rgba(0,0,0,0.12);
+}
+.btn-outline:hover {
+  border-color: rgba(0,0,0,0.25);
+  background: var(--bg-light);
+}
+
+/* ===== SECTION COMMON ===== */
+.section-light {
+  padding: 100px 40px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.section-header {
+  margin-bottom: 56px;
+  position: relative;
+  z-index: 1;
+}
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+/* ===== VIDEO WORKS SECTION (Dark — Sam Kolder Style) ===== */
+.works-dark {
+  background: linear-gradient(180deg,
+    rgba(71, 85, 105, 0.85) 0%,
+    rgba(51, 65, 85, 0.92) 1%,
+    rgba(30, 41, 59, 0.96) 3%,
+    #0f0f1a 6%,
+    #1a1a2e 75%,
+    rgba(26, 26, 46, 0.9) 92%,
+    rgba(71, 85, 105, 0.4) 100%
+  );
+  padding: 180px 0 180px;
+  position: relative;
+  overflow: hidden;
+}
+.works-dark::after {
+  content: '';
+  position: absolute;
+  width: 1200px;
+  height: 1200px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.25), rgba(59, 130, 246, 0.15) 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat2 20s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.works-dark .section-header {
+  max-width: var(--max-w);
+  margin: 0 auto 56px;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+}
+.works-dark .section-label { color: rgba(147, 197, 253, 0.8); }
+.works-dark .section-title { color: var(--text-light); }
+.works-dark .section-subtitle { color: var(--text-muted-light); }
+
+.video-grid {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  gap: 16px;
+  align-items: start;
+  grid-auto-flow: dense;
+}
+.video-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  background: #111118;
+  display: flex;
+  flex-direction: column;
+}
+/* Portrait cards span 2 rows for better layout density */
+.video-card.portrait {
+  grid-row: span 2;
+}
+.video-thumb-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  flex-shrink: 0;
+  background: #0a0a0f;
+}
+/* Portrait poster cards — maintain vertical aspect ratio */
+.video-card.portrait .video-thumb-wrap {
+  aspect-ratio: 2/3;
+  position: relative;
+}
+/* Landscape cards with black bars for cinematic look */
+.video-card.crop-bars .video-thumb-wrap {
+  aspect-ratio: 2.39/1;
+}
+.video-card.portrait .video-thumb {
+  position: absolute;
+  inset: 0;
+}
+/* Crop letterbox black bars from wide-format thumbnails */
+.video-card.crop-bars .video-thumb-wrap {
+  aspect-ratio: 2.2/1;
+}
+.video-card.crop-bars .video-thumb {
+  object-position: center center;
+}
+.video-card.portrait .video-info {
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.video-card.portrait .video-roles {
+  justify-content: flex-start;
+  max-width: none;
+}
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.video-card:hover .video-thumb {
+  transform: scale(1.04);
+}
+.play-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 64px; height: 64px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+.video-card:hover .play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.play-btn svg { fill: white; width: 24px; height: 24px; margin-left: 3px; }
+/* Card info bar below thumbnail */
+.video-info {
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  background: #111118;
+  min-height: 88px;
+}
+.video-info-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.video-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 8px;
+  width: fit-content;
+  white-space: nowrap;
+}
+.video-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+/* Role pills — always visible at bottom-right */
+.video-roles {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-shrink: 0;
+  max-width: 260px;
+  padding-top: 2px;
+}
+.role-pill {
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.12);
+  white-space: nowrap;
+  transition: var(--transition);
+  line-height: 1.2;
+}
+.video-card:hover .role-pill {
+  border-color: rgba(147, 197, 253, 0.35);
+  color: rgba(147, 197, 253, 0.9);
+}
+
+/* ===== IMAGE-ONLY CARDS (No video, private works) ===== */
+.video-card.image-only { cursor: default; }
+.video-card.image-only .play-btn { display: none; }
+/* Expand icon — appears on hover for image cards */
+.expand-btn {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+  cursor: pointer;
+}
+.video-card.image-only:hover .expand-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.expand-btn svg { stroke: white; fill: none; width: 22px; height: 22px; stroke-width: 2; }
+/* Multi-image gallery dot indicators */
+.gallery-dots {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 3;
+}
+.gallery-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transition: var(--transition);
+  cursor: pointer;
+}
+.gallery-dot.active {
+  background: rgba(255,255,255,0.9);
+  width: 18px;
+  border-radius: 3px;
+}
+/* Private badge on card */
+.private-badge {
+  position: absolute;
+  top: 14px; right: 14px;
+  padding: 5px 12px;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.7);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.private-badge svg { width: 12px; height: 12px; stroke: rgba(255,255,255,0.7); fill: none; stroke-width: 2; }
+
+/* ===== LIGHTBOX ===== */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+.lightbox-close {
+  position: fixed;
+  top: 24px; right: 28px;
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 1001;
+}
+.lightbox-close:hover { background: rgba(255,255,255,0.2); }
+.lightbox-close svg { stroke: white; width: 20px; height: 20px; fill: none; stroke-width: 2; }
+.lightbox-info {
+  position: fixed;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 1001;
+}
+.lightbox-info .video-title {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+.lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 1001;
+}
+.lightbox-nav:hover { background: rgba(255,255,255,0.18); }
+.lightbox-nav svg { stroke: white; width: 20px; height: 20px; fill: none; stroke-width: 2; }
+.lightbox-nav.prev { left: 24px; }
+.lightbox-nav.next { right: 24px; }
+
+/* Placeholder gradient thumbnails */
+.thumb-gradient-1 {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%);
+}
+.thumb-gradient-2 {
+  background: linear-gradient(135deg, #0c0c1d 0%, #1a1a3e 40%, #2d1b69 100%);
+}
+.thumb-gradient-3 {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 40%, #21262d 100%);
+}
+.thumb-gradient-4 {
+  background: linear-gradient(135deg, #1e1e30 0%, #2a1f5e 50%, #3d1f8e 100%);
+}
+
+/* ===== APPS SECTION (Light — Lusion Style) ===== */
+.apps-section {
+  padding: 180px 0;
+  position: relative;
+  overflow: visible;
+  background: linear-gradient(180deg,
+    rgba(71, 85, 105, 0.4) 0%,
+    rgba(100, 116, 139, 0.35) 10%,
+    rgba(148, 163, 184, 0.3) 25%,
+    rgba(186, 199, 217, 0.28) 50%,
+    rgba(203, 213, 225, 0.25) 75%,
+    rgba(226, 232, 240, 0.2) 90%,
+    rgba(148, 163, 184, 0.3) 100%
+  );
+}
+.apps-section::before {
+  content: '';
+  position: absolute;
+  width: 1400px;
+  height: 1400px;
+  background: radial-gradient(circle, rgba(71, 85, 105, 0.25), rgba(51, 65, 85, 0.18) 50%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(90px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat3 18s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.apps-section::after {
+  content: '';
+  position: absolute;
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(30, 58, 138, 0.2), transparent 70%);
+  border-radius: 50%;
+  filter: blur(85px);
+  bottom: 20%;
+  right: -10%;
+  animation: orbFloat4 16s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.apps-section > .section-header,
+.apps-section > .apps-grid {
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+.app-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  background: var(--white);
+}
+.app-card:hover {
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+.app-card-clickable {
+  cursor: pointer;
+}
+/* Live Demo Badge */
+.app-live-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 14px;
+  background: rgba(16, 185, 129, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+.app-live-badge svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
+}
+.app-card:hover .app-live-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+.app-preview {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+.app-preview-bg {
+  width: 100%;
+  height: 100%;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.app-card:hover .app-preview-bg {
+  transform: scale(1.05);
+  filter: brightness(1.05) saturate(1.1);
+}
+/* Add shimmer effect on hover */
+.app-preview-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.app-card:hover .app-preview-bg::before {
+  opacity: 1;
+  animation: shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+/* Preview 1: FitFocus AI - Dashboard Theme (纯深色仪表盘，无橙色) */
+.preview-1 {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(16, 185, 129, 0.15) 0%, transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+    linear-gradient(180deg, #0f172a 0%, #1e293b 55%, #0f172a 100%);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+/* 模拟仪表盘数据卡片的光晕 */
+.preview-1::before {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
+  height: 55%;
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.12) 0%, transparent 65%);
+  border-radius: 20px;
+  animation: preview1-pulse 7s ease-in-out infinite;
+}
+/* 模拟AI扫描线效果（翠绿色） */
+.preview-1::after {
+  content: '';
+  position: absolute;
+  top: -5%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.7), transparent);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  animation: preview1-scan 5s linear infinite;
+  opacity: 0.5;
+}
+@keyframes preview1-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.85; }
+}
+@keyframes preview1-scan {
+  0% { top: -5%; opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { top: 105%; opacity: 0; }
+}
+
+/* Preview 2: Nano Studio - Black & Gold Cinema Theme (黑金电影感) */
+.preview-2 {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 15% 85%, rgba(217, 119, 6, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+/* 模拟电影胶片光效 */
+.preview-2::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  width: 90%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.6) 30%, rgba(251, 191, 36, 0.6) 70%, transparent);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+  animation: preview2-film 10s linear infinite;
+}
+/* 金色光束扫描 */
+.preview-2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.15), transparent);
+  animation: preview2-sweep 8s ease-in-out infinite;
+}
+@keyframes preview2-film {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-5deg) scaleX(1); opacity: 0.8; }
+  50% { transform: translate(-50%, -50%) rotate(-5deg) scaleX(1.2); opacity: 1; }
+}
+@keyframes preview2-sweep {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+
+/* Preview 3: Voice Input Assistant - macOS Blue Sound Wave Theme (macOS原生音频助手) */
+.preview-3 {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(59, 130, 246, 0.15) 0%, transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(147, 197, 253, 0.12) 0%, transparent 45%),
+    linear-gradient(160deg, #eff6ff 0%, #dbeafe 40%, #bfdbfe 100%);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+.preview-3::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 60%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 15px,
+      rgba(59, 130, 246, 0.08) 15px,
+      rgba(59, 130, 246, 0.08) 18px
+    );
+  border-radius: 12px;
+  opacity: 0.6;
+}
+.preview-3::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.3) 5%,
+    rgba(59, 130, 246, 0.6) 50%,
+    rgba(59, 130, 246, 0.3) 95%,
+    transparent 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  animation: preview3-wave 3s ease-in-out infinite;
+}
+@keyframes preview3-wave {
+  0%, 100% {
+    transform: translateY(0) scaleX(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-8px) scaleX(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Preview 4: UI/UX Skills - Colorful Design System Theme (多彩设计系统) */
+.preview-4 {
+  position: relative;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(236, 72, 153, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(168, 85, 247, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+    linear-gradient(135deg, #fdf4ff 0%, #fae8ff 30%, #f3e8ff 60%, #ede9fe 100%);
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+.preview-4::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(45deg, transparent 48%, rgba(236, 72, 153, 0.1) 49%, rgba(236, 72, 153, 0.1) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(168, 85, 247, 0.08) 49%, rgba(168, 85, 247, 0.08) 51%, transparent 52%);
+  background-size: 40px 40px;
+  opacity: 0.4;
+  animation: preview4-pattern 15s linear infinite;
+}
+.preview-4::after {
+  content: '';
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 40%;
+  background: radial-gradient(ellipse at center,
+    rgba(236, 72, 153, 0.15) 0%,
+    rgba(168, 85, 247, 0.12) 35%,
+    rgba(59, 130, 246, 0.1) 70%,
+    transparent 100%);
+  border-radius: 50%;
+  animation: preview4-glow 6s ease-in-out infinite;
+}
+@keyframes preview4-pattern {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 40px 40px, -40px 40px;
+  }
+}
+@keyframes preview4-glow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+.app-icon {
+  position: absolute;
+  bottom: 20px;
+  left: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+.app-body {
+  padding: 24px;
+}
+.app-type {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.app-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.app-desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+.app-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.app-tag {
+  padding: 4px 12px;
+  background: var(--bg-light);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  background: linear-gradient(180deg,
+    rgba(148, 163, 184, 0.3) 0%,
+    rgba(131, 143, 161, 0.32) 15%,
+    rgba(100, 116, 139, 0.35) 40%,
+    rgba(71, 85, 105, 0.38) 70%,
+    rgba(51, 65, 85, 0.35) 90%,
+    rgba(30, 41, 59, 0.3) 100%
+  );
+  padding: 180px 0;
+  position: relative;
+  overflow: visible;
+}
+.about-section::before {
+  content: '';
+  position: absolute;
+  width: 1300px;
+  height: 1300px;
+  background: radial-gradient(circle, rgba(71, 85, 105, 0.3), rgba(51, 65, 85, 0.2) 50%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(90px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: orbFloat1 17s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.about-section::after {
+  content: '';
+  position: absolute;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(100, 116, 139, 0.25), transparent 70%);
+  border-radius: 50%;
+  filter: blur(85px);
+  top: 20%;
+  left: -10%;
+  animation: orbFloat3 15s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.about-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+.about-text .section-title {
+  margin-bottom: 24px;
+}
+.about-bio {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+.about-text {
+  position: relative;
+  z-index: 1;
+}
+.skill-group {
+  margin-bottom: 28px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+.skill-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+.skill-group:hover::before {
+  left: 100%;
+}
+.skill-group:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border-color: rgba(99, 102, 241, 0.2);
+  background: rgba(255, 255, 255, 0.8);
+}
+.skill-group:nth-child(2) { animation-delay: 0.1s; }
+.skill-group:nth-child(3) { animation-delay: 0.2s; }
+.skill-group:nth-child(4) { animation-delay: 0.3s; }
+.skill-group:nth-child(5) { animation-delay: 0.4s; }
+.skill-group:nth-child(6) { animation-delay: 0.5s; }
+.skill-group:nth-child(7) { animation-delay: 0.6s; }
+.skill-group-name {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.skill-group-name::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.skill-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.skill-chip {
+  padding: 8px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: default;
+}
+.skill-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: var(--transition);
+}
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.stat-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  padding: 160px 0 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg,
+    rgba(30, 41, 59, 0.3) 0%,
+    rgba(51, 65, 85, 0.24) 12%,
+    rgba(71, 85, 105, 0.18) 25%,
+    rgba(100, 116, 139, 0.12) 42%,
+    rgba(148, 163, 184, 0.07) 60%,
+    rgba(203, 213, 225, 0.03) 75%,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+.contact-section > .section-label,
+.contact-section > .section-title,
+.contact-section > .section-subtitle,
+.contact-section > .contact-cards {
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.contact-section .section-title {
+  margin-bottom: 16px;
+}
+.contact-section .section-subtitle {
+  margin: 0 auto 32px;
+  text-align: center;
+}
+.contact-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.contact-card {
+  padding: 28px 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-width: 200px;
+  transition: var(--transition);
+  flex: 1;
+  max-width: 280px;
+}
+.contact-card:hover {
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.contact-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.contact-icon svg { width: 20px; height: 20px; stroke: var(--accent); fill: none; stroke-width: 2; }
+.contact-method {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.contact-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 16px 40px;
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-copy {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+.footer-links a:hover { color: var(--text-primary); }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUpScale {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-in {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.hero h1.animate-in {
+  animation-name: fadeUpScale;
+  animation-duration: 1s;
+}
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+.delay-4 { animation-delay: 0.6s; }
+.delay-5 { animation-delay: 0.75s; }
+
+/* Scroll-triggered reveal for sections below fold */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .video-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .video-grid { grid-template-columns: 1fr; }
+  .video-card.portrait { grid-row: span 1; }
+  .video-card.portrait .video-thumb-wrap {
+    aspect-ratio: 3/4;
+    flex: none;
+  }
+  .video-card.portrait .video-thumb {
+    position: static;
+  }
+}
+@media (max-width: 768px) {
+  .nav-inner { padding: 0 20px; }
+  .nav-links { gap: 16px; }
+  .hero { padding: 120px 20px 80px; }
+  .hero-wrapper { padding-bottom: 60px; }
+  .hero-content { grid-template-columns: 1fr; gap: 40px; }
+  .hero-right { justify-content: flex-start; }
+  .hero-name { text-align: left; font-size: clamp(2rem, 8vw, 3rem); }
+  .works-dark { padding: 120px 0; }
+  .section-light { padding: 120px 20px; }
+  .apps-section { padding: 120px 0; }
+  .apps-section > .section-header,
+  .apps-section > .apps-grid { padding-left: 20px; padding-right: 20px; }
+  .contact-section { padding: 100px 0 12px; }
+  .contact-section > .section-label,
+  .contact-section > .section-title,
+  .contact-section > .section-subtitle,
+  .contact-section > .contact-cards { padding-left: 20px; padding-right: 20px; }
+  .about-section { padding: 120px 0; }
+  .about-inner { padding: 0 20px; }
+  .video-grid { grid-template-columns: 1fr; padding: 0 20px; }
+  .apps-grid { grid-template-columns: 1fr; }
+  .works-dark .section-header { padding: 0 20px; }
+  .video-info { flex-direction: column; align-items: flex-start; }
+  .video-roles { justify-content: flex-start; max-width: none; }
+  footer { padding: 12px 20px; }
+  .footer-inner { flex-direction: column; gap: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ===== DEMO LABEL ===== */
+.demo-banner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--text-primary);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 200;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  letter-spacing: 0.03em;
+}
+</style>
+</head>
+<body>
+
+<!-- Demo Label -->
+<div class="demo-banner">DEMO PREVIEW — 视觉风格预览</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand" data-i18n="nav.brand">个人作品集网站</a>
+    <div class="nav-links">
+      <a href="#works" class="active" data-i18n="nav.works">作品</a>
+      <a href="#apps" data-i18n="nav.apps">应用</a>
+      <a href="#about" data-i18n="nav.about">关于</a>
+      <a href="#contact" data-i18n="nav.contact">联系</a>
+    </div>
+    <div class="lang-pills">
+      <button class="lang-pill active">JA</button>
+      <button class="lang-pill">ZH</button>
+      <button class="lang-pill">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section (Light, Clean + Ambient Animation) -->
+<div class="hero-wrapper">
+  <!-- Background animated elements -->
+  <div class="hero-mesh"></div>
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+  <div class="hero-dots"></div>
+  <canvas id="heroCanvas"></canvas>
+
+  <!-- Content (above background) -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1 class="animate-in delay-1" data-i18n="hero.title">Visual Creator<br>& AI Developer</h1>
+        <p class="hero-desc animate-in delay-2" data-i18n="hero.subtitle">
+          映像制作 × AI で、アイデアを形にします。
+        </p>
+        <div class="hero-actions animate-in delay-3">
+          <a href="#works" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span data-i18n="hero.cta">作品を見る</span>
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <span data-i18n="hero.contact">連絡する</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-name animate-in">袁灏<br>YUANHAO</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Video Works Section (Dark — Sam Kolder Style) -->
+<section id="works" class="works-dark">
+  <div class="section-header">
+    <div class="section-label animate-in" data-i18n="video.label">VIDEO WORKS</div>
+    <h2 class="section-title animate-in delay-1" data-i18n="video.title">映像制作</h2>
+    <p class="section-subtitle animate-in delay-2" data-i18n="video.subtitle">商用映像からパーソナルプロジェクトまで、様々な制作に携わっています。</p>
+  </div>
+
+  <div class="video-grid"></div>
+</section>
+
+<!-- Apps & Tools Section (Light — Lusion Style) -->
+<section id="apps" class="apps-section">
+  <div class="section-header">
+    <div class="section-label" data-i18n="apps.label">APPS & TOOLS</div>
+    <h2 class="section-title" data-i18n="apps.title">アプリ & ツール</h2>
+    <p class="section-subtitle" data-i18n="apps.subtitle">制作したアプリケーション、ツール、ワークフロー自動化。</p>
+  </div>
+
+  <div class="apps-grid"></div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about-section">
+  <div class="about-inner">
+    <div class="about-text">
+      <div class="section-label" data-i18n="about.label">ABOUT</div>
+      <h2 class="section-title" data-i18n="about.title">プロフィール</h2>
+      <p class="about-bio" data-i18n="about.bio">
+        映像制作とAI技術を掛け合わせて、新しい表現を模索しています。
+      </p>
+
+      <!-- Production Skills -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.production">制作スキル</div>
+        <div class="skill-chips">
+          <span class="skill-chip" data-i18n="skill.planning">企画・脚本</span>
+          <span class="skill-chip" data-i18n="skill.directing">演出・ディレクション</span>
+          <span class="skill-chip" data-i18n="skill.shooting">撮影</span>
+          <span class="skill-chip" data-i18n="skill.editing">編集</span>
+          <span class="skill-chip">VFX</span>
+          <span class="skill-chip" data-i18n="skill.grading">カラーグレーディング</span>
+          <span class="skill-chip" data-i18n="skill.tvc">TVC広告</span>
+          <span class="skill-chip" data-i18n="skill.sns">SNS動画</span>
+          <span class="skill-chip" data-i18n="skill.live">ライブ配信</span>
+        </div>
+      </div>
+
+      <!-- Shooting & Audio -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.shooting">撮影 & 音声</div>
+        <div class="skill-chips">
+          <span class="skill-chip" data-i18n="skill.camera">プロカメラ操作</span>
+          <span class="skill-chip" data-i18n="skill.stabilizer">スタビライザー</span>
+          <span class="skill-chip" data-i18n="skill.lighting">照明設計</span>
+          <span class="skill-chip" data-i18n="skill.recording">音声収録</span>
+          <span class="skill-chip" data-i18n="skill.mixing">音声編集/ミキシング</span>
+          <span class="skill-chip" data-i18n="skill.sound">音響効果デザイン</span>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.tools">ツール</div>
+        <div class="skill-chips">
+          <span class="skill-chip">DaVinci Resolve</span>
+          <span class="skill-chip">Premiere Pro</span>
+          <span class="skill-chip">After Effects</span>
+          <span class="skill-chip">Photoshop</span>
+          <span class="skill-chip">Illustrator</span>
+          <span class="skill-chip">CapCut</span>
+        </div>
+      </div>
+
+      <!-- Collaboration Tools -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.collab">協力ツール</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Git / GitHub</span>
+          <span class="skill-chip">Frame.io</span>
+          <span class="skill-chip">Notion</span>
+          <span class="skill-chip">Figma</span>
+          <span class="skill-chip">Slack</span>
+        </div>
+      </div>
+
+      <!-- Development & AI -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.dev">開発 & AI</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Claude Code</span>
+          <span class="skill-chip">Cursor</span>
+          <span class="skill-chip">VS Code</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip" data-i18n="skill.aivideo">AI動画生成</span>
+          <span class="skill-chip" data-i18n="skill.workflow">ワークフロー自動化</span>
+          <span class="skill-chip" data-i18n="skill.webdev">Web開発</span>
+          <span class="skill-chip" data-i18n="skill.data">データ分析/可視化</span>
+          <span class="skill-chip" data-i18n="skill.subtitle">字幕/翻訳</span>
+        </div>
+      </div>
+
+      <!-- Certifications & Languages -->
+      <div class="skill-group">
+        <div class="skill-group-name" data-i18n="skills.cert">資格 & 言語</div>
+        <div class="skill-chips">
+          <span class="skill-chip">JLPT N1</span>
+          <span class="skill-chip" data-i18n="skill.colorist">DaVinci Resolve 認定カラリスト</span>
+          <span class="skill-chip" data-i18n="skill.chinese">中国語（母語）</span>
+          <span class="skill-chip" data-i18n="skill.japanese">日本語（N1）</span>
+          <span class="skill-chip">English</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section">
+  <div class="section-label" data-i18n="contact.label">CONTACT</div>
+  <h2 class="section-title" data-i18n="contact.title">お問い合わせ</h2>
+  <p class="section-subtitle" data-i18n="contact.subtitle">お気軽にご連絡ください。メール優先でお返事いたします。</p>
+
+  <div class="contact-cards">
+    <a href="mailto:hil400333@gmail.com" class="contact-card">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><path d="m4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-method">Email</div>
+      <div class="contact-value">hil400333@gmail.com</div>
+    </a>
+
+    <div class="contact-card">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </div>
+      <div class="contact-method">WeChat</div>
+      <div class="contact-value">Tyjy20819</div>
+    </div>
+
+    <a href="https://www.instagram.com/jianyansx" target="_blank" class="contact-card">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </div>
+      <div class="contact-method">Instagram</div>
+      <div class="contact-value">@jianyansx</div>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">&copy; 2026 Yuanhao. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#works" data-i18n="nav.works">作品</a>
+      <a href="#apps" data-i18n="nav.apps">応用</a>
+      <a href="#about" data-i18n="nav.about">关于</a>
+      <a href="#contact" data-i18n="nav.contact">联系</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox Overlay -->
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">
+    <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="lightbox-nav prev" onclick="lightboxPrev()" style="display:none;">
+    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="lightbox-content">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+  </div>
+  <button class="lightbox-nav next" onclick="lightboxNext()" style="display:none;">
+    <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+  <div class="lightbox-info" id="lightboxInfo"></div>
+</div>
+
+<script>
+// ===== LIGHTBOX LOGIC =====
+let lightboxImages = [];
+let lightboxIndex = 0;
+let lightboxTitle = '';
+
+function openLightbox(images, title, startIndex) {
+  lightboxImages = images;
+  lightboxTitle = title || '';
+  lightboxIndex = startIndex || 0;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function updateLightbox() {
+  const img = document.getElementById('lightboxImg');
+  img.src = lightboxImages[lightboxIndex];
+  const info = document.getElementById('lightboxInfo');
+  let html = '<div class="video-title">' + lightboxTitle + '</div>';
+  if (lightboxImages.length > 1) {
+    html += '<div style="margin-top:4px;font-size:0.75rem;">' + (lightboxIndex + 1) + ' / ' + lightboxImages.length + '</div>';
+  }
+  info.innerHTML = html;
+  // Show/hide nav arrows
+  document.querySelector('.lightbox-nav.prev').style.display = lightboxImages.length > 1 ? 'flex' : 'none';
+  document.querySelector('.lightbox-nav.next').style.display = lightboxImages.length > 1 ? 'flex' : 'none';
+}
+function lightboxPrev() {
+  lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+  updateLightbox();
+}
+function lightboxNext() {
+  lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+  updateLightbox();
+}
+// Close on backdrop click
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this || e.target.classList.contains('lightbox-content')) closeLightbox();
+});
+// Close on Escape key
+document.addEventListener('keydown', function(e) {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lightboxPrev();
+  if (e.key === 'ArrowRight') lightboxNext();
+});
+
+// Bind image-only cards to lightbox
+document.querySelectorAll('.video-card.image-only[data-lightbox]').forEach(card => {
+  card.addEventListener('click', function(e) {
+    const images = JSON.parse(this.dataset.images || '[]');
+    const title = this.dataset.title || '';
+    if (images.length > 0 && images[0] !== '') {
+      openLightbox(images, title, 0);
+    }
+  });
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+// Intersection Observer for scroll animations (hero)
+const animObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.animate-in').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  animObserver.observe(el);
+});
+
+// Scroll reveal for sections below fold
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  revealObserver.observe(el);
+});
+
+// Mouse parallax on hero orbs (more responsive)
+const heroWrapper = document.querySelector('.hero-wrapper');
+const orbs = document.querySelectorAll('.orb');
+let mouseX = 0, mouseY = 0, currentX = 0, currentY = 0;
+if (heroWrapper) {
+  heroWrapper.addEventListener('mousemove', (e) => {
+    const rect = heroWrapper.getBoundingClientRect();
+    mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+    mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+  });
+  function animateOrbs() {
+    currentX += (mouseX - currentX) * 0.08;
+    currentY += (mouseY - currentY) * 0.08;
+    orbs.forEach((orb, i) => {
+      const s = (i + 1) * 35;
+      orb.style.marginLeft = (currentX * s) + 'px';
+      orb.style.marginTop = (currentY * s) + 'px';
+    });
+    requestAnimationFrame(animateOrbs);
+  }
+  animateOrbs();
+}
+
+// Floating particles on canvas
+const canvas = document.getElementById('heroCanvas');
+if (canvas && heroWrapper) {
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resizeCanvas() {
+    canvas.width = heroWrapper.offsetWidth;
+    canvas.height = heroWrapper.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 2.5 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.4;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.35 + 0.08;
+      this.fadeDir = Math.random() > 0.5 ? 1 : -1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.opacity += this.fadeDir * 0.002;
+      if (this.opacity > 0.4) this.fadeDir = -1;
+      if (this.opacity < 0.05) this.fadeDir = 1;
+      if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
+        this.reset();
+      }
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(100, 140, 220, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    // Draw subtle connecting lines between nearby particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(100, 150, 240, ${0.06 * (1 - dist / 120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+}
+
+// Nav active state on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const scrollY = window.pageYOffset;
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    const height = section.offsetHeight;
+    const id = section.getAttribute('id');
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (link) {
+      if (scrollY >= top && scrollY < top + height) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+  });
+});
+
+// ===== MULTI-LANGUAGE SYSTEM =====
+const translations = {
+  ja: {
+    'nav.brand': 'ポートフォリオサイト',
+    'nav.works': '作品',
+    'nav.apps': 'アプリケーション',
+    'nav.about': 'プロフィール',
+    'nav.contact': 'お問い合わせ',
+    'hero.title': '映像クリエイター',
+    'hero.subtitle': '映像制作とAI技術を掛け合わせて、新しい表現を模索しています。',
+    'hero.cta': '作品を見る',
+    'hero.contact': '連絡する',
+    'video.label': 'VIDEO WORKS',
+    'video.title': '映像制作',
+    'video.subtitle': '商用映像からパーソナルプロジェクトまで、様々な制作に携わっています。',
+    'apps.label': 'APPLICATIONS',
+    'apps.title': 'AI アプリケーション',
+    'apps.subtitle': '制作したアプリケーション、ツール、ワークフロー自動化。',
+    'about.label': 'ABOUT',
+    'about.title': 'プロフィール',
+    'about.bio': '映像制作とAI技術を掛け合わせて、新しい表現を模索しています。',
+    'skills.production': '制作スキル',
+    'skills.shooting': '撮影 & 音声',
+    'skills.tools': 'ツール',
+    'skills.collab': '協力ツール',
+    'skills.dev': '開発 & AI',
+    'skills.cert': '資格 & 言語',
+    'contact.label': 'CONTACT',
+    'contact.title': 'お問い合わせ',
+    'contact.subtitle': 'お気軽にご連絡ください。メール優先でお返事いたします。',
+    'footer.rights': '© 2026 Yuanhao. All rights reserved.',
+    'skill.planning': '企画・脚本',
+    'skill.directing': '演出・ディレクション',
+    'skill.shooting': '撮影',
+    'skill.editing': '編集',
+    'skill.grading': 'カラーグレーディング',
+    'skill.tvc': 'TVC広告',
+    'skill.sns': 'SNS動画',
+    'skill.live': 'ライブ配信',
+    'skill.camera': 'プロカメラ操作',
+    'skill.stabilizer': 'スタビライザー',
+    'skill.lighting': '照明設計',
+    'skill.recording': '音声収録',
+    'skill.mixing': '音声編集/ミキシング',
+    'skill.sound': '音響効果デザイン',
+    'skill.aivideo': 'AI動画生成',
+    'skill.workflow': 'ワークフロー自動化',
+    'skill.webdev': 'Web開発',
+    'skill.data': 'データ分析/可視化',
+    'skill.subtitle': '字幕/翻訳',
+    'skill.colorist': 'DaVinci Resolve 認定カラリスト',
+    'skill.chinese': '中国語（母語）',
+    'skill.japanese': '日本語（N1）',
+    'app.fitfocus.type': 'AI ウェブアプリ',
+    'app.fitfocus.desc': 'Gemini マルチモーダルAIを活用した身体進化管理システム。食事の写真撮影で自動栄養分析、動的代謝エンジンによる熱量予算管理、AI身体スキャンで体型を可視化。',
+    'app.nano.type': '映像制作スイート',
+    'app.nano.desc': 'Gemini & Veo搭載のAI映像創作プラットフォーム。思考の発散から絵コンテ脚本、動画生成、AIナレーションまで、インスピレーションをプロの映像素材に変える統合型制作環境。',
+    'app.voice.type': 'macOS ネイティブアプリ',
+    'app.voice.desc': 'Apple音声認識 + AI校正を統合したmacOS専用音声入力アシスタント。メニューバーから起動し、リアルタイム音声転写・Anthropic/OpenAI/Ollamaによる文章校正・任意のアプリへ自動挿入。',
+    'app.storyboard.type': 'Claude Code スキル',
+    'app.storyboard.desc': '脚本を実行可能な絵コンテ制作フローに変換するAIスキル。テキスト絵コンテ凍結 → 参考画像生成 → コマのバッチ生成 → レビュー反映 → 可視化エクスポート。ステートマシン駆動、6段階自己審査、物理的一貫性チェック。',
+    'video.type.shortfilm': 'Short Film',
+    'video.type.documentary': 'Documentary',
+    'video.type.shortdrama': 'Short Drama',
+    'role.director': '監督',
+    'role.script': '脚本',
+    'role.editing': '編集',
+    'role.color': 'カラー',
+    'role.sound': 'サウンド',
+    'role.planning': '企画'
+  },
+  zh: {
+    'nav.brand': '个人作品集网站',
+    'nav.works': '作品',
+    'nav.apps': '应用',
+    'nav.about': '关于',
+    'nav.contact': '联系',
+    'hero.title': '影像创作者',
+    'hero.subtitle': '融合影像制作与AI技术，探索全新的表达方式。',
+    'hero.cta': '查看作品',
+    'hero.contact': '联系我',
+    'video.label': '影像作品',
+    'video.title': '影像制作',
+    'video.subtitle': '从商业影像到个人项目，参与各类制作。',
+    'apps.label': '应用程序',
+    'apps.title': 'AI 应用',
+    'apps.subtitle': '自主开发的应用程序、工具和工作流自动化。',
+    'about.label': '关于',
+    'about.title': '个人简介',
+    'about.bio': '融合影像制作与AI技术，探索全新的表达方式。',
+    'skills.production': '制作技能',
+    'skills.shooting': '拍摄 & 音频',
+    'skills.tools': '工具软件',
+    'skills.collab': '协作工具',
+    'skills.dev': '开发 & AI',
+    'skills.cert': '资格 & 语言',
+    'contact.label': '联系方式',
+    'contact.title': '联系我',
+    'contact.subtitle': '欢迎随时联系，优先通过邮件回复。',
+    'footer.rights': '© 2026 袁灏 版权所有',
+    'skill.planning': '企划·脚本',
+    'skill.directing': '导演',
+    'skill.shooting': '拍摄',
+    'skill.editing': '剪辑',
+    'skill.grading': '调色',
+    'skill.tvc': 'TVC广告',
+    'skill.sns': 'SNS视频',
+    'skill.live': '直播',
+    'skill.camera': '专业相机操作',
+    'skill.stabilizer': '稳定器',
+    'skill.lighting': '灯光设计',
+    'skill.recording': '音频录制',
+    'skill.mixing': '音频剪辑/混音',
+    'skill.sound': '音效设计',
+    'skill.aivideo': 'AI视频生成',
+    'skill.workflow': '工作流自动化',
+    'skill.webdev': 'Web开发',
+    'skill.data': '数据分析/可视化',
+    'skill.subtitle': '字幕/翻译',
+    'skill.colorist': 'DaVinci Resolve 认证调色师',
+    'skill.chinese': '中文（母语）',
+    'skill.japanese': '日语（N1）',
+    'app.fitfocus.type': 'AI 网页应用',
+    'app.fitfocus.desc': '基于 Gemini 多模态AI的身体进化管理系统。食物照片自动营养分析、动态代谢引擎热量预算管理、AI身体扫描体态可视化。',
+    'app.nano.type': '影像制作套件',
+    'app.nano.desc': '搭载 Gemini & Veo 的AI影像创作平台。从思考发散到分镜脚本、视频生成、AI配音，将灵感转化为专业影像素材的统合制作环境。',
+    'app.voice.type': 'macOS 原生应用',
+    'app.voice.desc': '集成 Apple 语音识别 + AI 校正的 macOS 专用语音输入助手。从菜单栏启动，实时语音转写、Anthropic/OpenAI/Ollama 文章校正、自动插入任意应用。',
+    'app.storyboard.type': 'Claude Code 技能',
+    'app.storyboard.desc': '将脚本转换为可执行分镜制作流程的AI技能。文本分镜冻结 → 参考图生成 → 分镜帧批量生成 → 审核回填 → 可视化导出。状态机驱动、6阶段自检、物理一致性检查。',
+    'video.type.shortfilm': '短片',
+    'video.type.documentary': '纪录片',
+    'video.type.shortdrama': '短剧',
+    'role.director': '导演',
+    'role.script': '编剧',
+    'role.editing': '剪辑',
+    'role.color': '调色',
+    'role.sound': '声音设计',
+    'role.planning': '企划'
+  },
+  en: {
+    'nav.brand': 'Portfolio',
+    'nav.works': 'Works',
+    'nav.apps': 'Apps',
+    'nav.about': 'About',
+    'nav.contact': 'Contact',
+    'hero.title': 'Video Creator',
+    'hero.subtitle': 'Exploring new expressions by combining video production and AI technology.',
+    'hero.cta': 'View Works',
+    'hero.contact': 'Contact',
+    'video.label': 'VIDEO WORKS',
+    'video.title': 'Video Production',
+    'video.subtitle': 'From commercial videos to personal projects, involved in various productions.',
+    'apps.label': 'APPLICATIONS',
+    'apps.title': 'AI Applications',
+    'apps.subtitle': 'Self-developed applications, tools, and workflow automation.',
+    'about.label': 'ABOUT',
+    'about.title': 'Profile',
+    'about.bio': 'Exploring new expressions by combining video production and AI technology.',
+    'skills.production': 'Production Skills',
+    'skills.shooting': 'Shooting & Audio',
+    'skills.tools': 'Tools',
+    'skills.collab': 'Collaboration Tools',
+    'skills.dev': 'Development & AI',
+    'skills.cert': 'Certifications & Languages',
+    'contact.label': 'CONTACT',
+    'contact.title': 'Get In Touch',
+    'contact.subtitle': 'Feel free to contact me. I prioritize email responses.',
+    'footer.rights': '© 2026 Yuanhao. All rights reserved.',
+    'skill.planning': 'Planning & Scriptwriting',
+    'skill.directing': 'Directing',
+    'skill.shooting': 'Cinematography',
+    'skill.editing': 'Editing',
+    'skill.grading': 'Color Grading',
+    'skill.tvc': 'TVC Commercials',
+    'skill.sns': 'Social Media Videos',
+    'skill.live': 'Live Streaming',
+    'skill.camera': 'Professional Camera Operation',
+    'skill.stabilizer': 'Gimbal/Stabilizer',
+    'skill.lighting': 'Lighting Design',
+    'skill.recording': 'Audio Recording',
+    'skill.mixing': 'Audio Editing/Mixing',
+    'skill.sound': 'Sound Design',
+    'skill.aivideo': 'AI Video Generation',
+    'skill.workflow': 'Workflow Automation',
+    'skill.webdev': 'Web Development',
+    'skill.data': 'Data Analysis/Visualization',
+    'skill.subtitle': 'Subtitles/Translation',
+    'skill.colorist': 'DaVinci Resolve Certified Colorist',
+    'skill.chinese': 'Chinese (Native)',
+    'skill.japanese': 'Japanese (N1)',
+    'app.fitfocus.type': 'AI Web App',
+    'app.fitfocus.desc': 'Body transformation management system powered by Gemini multimodal AI. Auto nutrition analysis from food photos, dynamic metabolism engine for calorie budgeting, AI body scan for physique visualization.',
+    'app.nano.type': 'Video Production Suite',
+    'app.nano.desc': 'AI video creation platform with Gemini & Veo. From brainstorming to storyboarding, video generation, and AI voiceover - an integrated production environment that transforms ideas into professional footage.',
+    'app.voice.type': 'macOS Native App',
+    'app.voice.desc': 'macOS voice input assistant integrating Apple Speech Recognition + AI proofreading. Launch from menu bar for real-time transcription, text refinement via Anthropic/OpenAI/Ollama, and auto-insertion into any app.',
+    'app.storyboard.type': 'Claude Code Skill',
+    'app.storyboard.desc': 'AI skill that converts scripts into executable storyboard production workflows. Text storyboard freeze → reference image generation → batch frame generation → review & refinement → visual export. State machine-driven, 6-stage self-review, physical consistency checks.',
+    'video.type.shortfilm': 'Short Film',
+    'video.type.documentary': 'Documentary',
+    'video.type.shortdrama': 'Short Drama',
+    'role.director': 'Director',
+    'role.script': 'Screenwriter',
+    'role.editing': 'Editing',
+    'role.color': 'Color Grading',
+    'role.sound': 'Sound Design',
+    'role.planning': 'Planning'
+  }
+};
+
+let currentLang = 'ja';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('preferredLanguage', lang);
+
+  // Update all elements with data-i18n attribute
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang] && translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+
+  // Update active language button
+  document.querySelectorAll('.lang-pill').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.textContent.toLowerCase() === lang) {
+      btn.classList.add('active');
+    }
+  });
+}
+
+// Initialize language switcher
+document.querySelectorAll('.lang-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.textContent.toLowerCase();
+    switchLanguage(lang);
+  });
+});
+
+// Load preferred language on page load
+const savedLang = localStorage.getItem('preferredLanguage') || 'ja';
+switchLanguage(savedLang);
+</script>
+
+<script src="./data-loader.js"></script>
+
+</body>
+</html>

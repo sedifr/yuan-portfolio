@@ -1,0 +1,18 @@
+{
+  "name": "yuan-portfolio",
+  "version": "2.0.0",
+  "description": "袁灏的作品集网站 - 自动同步版",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "portfolio",
+    "video",
+    "ai",
+    "multilingual"
+  ],
+  "author": "袁灏",
+  "license": "MIT"
+}

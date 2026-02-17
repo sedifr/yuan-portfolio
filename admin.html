@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品集管理后台</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* 登录页面 */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.login-box {
+  background: white;
+  padding: 48px 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 400px;
+}
+.login-box h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #1a1a2e;
+}
+.login-box p {
+  color: #64748b;
+  margin-bottom: 32px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+.form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+.form-group input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+.error-message {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 8px;
+  display: none;
+}
+
+/* 管理后台主界面 */
+.admin-container {
+  display: none;
+  min-height: 100vh;
+}
+.admin-header {
+  background: white;
+  padding: 16px 32px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-header h1 {
+  font-size: 24px;
+  color: #1a1a2e;
+}
+.admin-header .btn-logout {
+  padding: 8px 20px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.admin-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  border-bottom: 2px solid #e2e8f0;
+}
+.tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.3s;
+}
+.tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}
+
+/* 表单卡片 */
+.form-card {
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+.form-card h2 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: #1a1a2e;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 图片上传区域 */
+.upload-area {
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #f8fafc;
+}
+.upload-area:hover {
+  border-color: #667eea;
+  background: #f1f5f9;
+}
+.upload-area.dragover {
+  border-color: #667eea;
+  background: #ede9fe;
+}
+.upload-area input[type="file"] {
+  display: none;
+}
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+.upload-text {
+  color: #64748b;
+  font-size: 14px;
+}
+.upload-preview {
+  margin-top: 20px;
+  display: none;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.upload-preview.active {
+  display: flex;
+}
+.preview-item {
+  position: relative;
+  display: inline-block;
+}
+.preview-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.preview-remove {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-remove:hover {
+  background: #dc2626;
+}
+
+/* 复选框组 */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+.checkbox-item label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* 作品列表 */
+.works-list {
+  display: grid;
+  gap: 16px;
+}
+.work-item {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.work-thumb {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.work-info {
+  flex: 1;
+}
+.work-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.work-meta {
+  color: #64748b;
+  font-size: 14px;
+}
+.work-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn-edit, .btn-delete {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+.btn-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-save {
+  padding: 12px 32px;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 24px;
+}
+.btn-save:hover {
+  background: #059669;
+}
+
+.success-message {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  display: none;
+}
+
+/* 加载动画样式 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-box p {
+  margin: 0;
+  color: #374151;
+  font-size: 16px;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<!-- 登录界面 -->
+<div class="login-container" id="loginPage">
+  <div class="login-box">
+    <h1>🔐 管理员登录</h1>
+    <p>输入密码以访问管理后台</p>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="password">密码</label>
+        <input type="password" id="password" placeholder="请输入管理员密码" required>
+        <div class="error-message" id="errorMessage">密码错误,请重试</div>
+      </div>
+      <button type="submit" class="btn-primary">登录</button>
+    </form>
+  </div>
+</div>
+
+<!-- 管理后台界面 -->
+<div class="admin-container" id="adminPage">
+  <div class="admin-header">
+    <h1>📊 作品集管理后台</h1>
+    <button class="btn-logout" onclick="logout()">退出登录</button>
+  </div>
+
+  <div class="admin-main">
+    <!-- 标签切换 -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('videos')">📹 影像作品</button>
+      <button class="tab" onclick="switchTab('apps')">📱 AI应用</button>
+    </div>
+
+    <!-- 影像作品标签页 -->
+    <div class="tab-content active" id="videosTab">
+      <div class="form-card">
+        <h2>➕ 添加影像作品</h2>
+        <form id="videoForm">
+          <div class="form-group">
+            <label>作品标题 * (三语言)</label>
+            <div class="form-row">
+              <div class="form-group">
+                <label>🇯🇵 日本語</label>
+                <input type="text" name="title_ja" placeholder="例: 運命〜第二話" required>
+              </div>
+              <div class="form-group">
+                <label>🇨🇳 中文</label>
+                <input type="text" name="title_zh" placeholder="例: 命运～第二话" required>
+              </div>
+              <div class="form-group">
+                <label>🇺🇸 English</label>
+                <input type="text" name="title_en" placeholder="e.g.: Fate - Episode 2" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>作品类型 *</label>
+              <select name="type" required>
+                <option value="">请选择</option>
+                <option value="shortfilm">微电影</option>
+                <option value="documentary">纪录片</option>
+                <option value="shortdrama">短剧</option>
+                <option value="gallery">摄影作品</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>封面图片 *（可上传多张用于图库作品）</label>
+            <div class="upload-area" id="videoUploadArea">
+              <input type="file" id="videoImageInput" accept="image/*" multiple>
+              <div class="upload-icon">📷</div>
+              <div class="upload-text">
+                <strong>点击选择</strong> 或 <strong>拖拽图片</strong> 到这里<br>
+                支持 JPG, PNG 格式 | 可一次选择多张
+              </div>
+            </div>
+            <div class="upload-preview" id="videoPreview"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>作品链接</label>
+              <input type="url" name="link" placeholder="YouTube/Threads链接 (可选)">
+            </div>
+            <div class="form-group">
+              <label>布局样式</label>
+              <select name="layout">
+                <option value="portrait">竖屏</option>
+                <option value="crop-bars">裁切黑边</option>
+                <option value="image-only">纯图片</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>你的角色 (可多选)</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" name="roles" value="director" id="role-director">
+                <label for="role-director">导演</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" name="roles" value="script" id="role-script">
+                <label for="role-script">编剧</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" name="roles" value="cinematography" id="role-cinematography">
+                <label for="role-cinematography">摄影</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" name="roles" value="editing" id="role-editing">
+                <label for="role-editing">剪辑</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" name="roles" value="color" id="role-color">
+                <label for="role-color">调色</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>自定义角色 (用逗号分隔，例如：配音,后期,特效)</label>
+            <input type="text" name="customRoles" placeholder="可选：添加其他角色">
+          </div>
+
+          <div class="form-group">
+            <label>作品简介 (可选 - 三语言)</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+              <div>
+                <label style="font-size: 13px; color: #64748b; margin-bottom: 4px; display: block;">🇯🇵 日本語</label>
+                <textarea name="description_ja" rows="3" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 14px;" placeholder="この作品の説明..."></textarea>
+              </div>
+              <div>
+                <label style="font-size: 13px; color: #64748b; margin-bottom: 4px; display: block;">🇨🇳 中文</label>
+                <textarea name="description_zh" rows="3" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 14px;" placeholder="为这个作品添加一些说明..."></textarea>
+              </div>
+              <div>
+                <label style="font-size: 13px; color: #64748b; margin-bottom: 4px; display: block;">🇺🇸 English</label>
+                <textarea name="description_en" rows="3" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 14px;" placeholder="Add description for this work..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-save">💾 保存并发布</button>
+          <div class="success-message" id="videoSuccess">✅ 作品已成功添加!</div>
+        </form>
+      </div>
+
+      <!-- 已发布作品列表 -->
+      <div class="form-card">
+        <h2>📚 已发布的作品</h2>
+        <div class="works-list" id="videosList">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- AI应用标签页 -->
+    <div class="tab-content" id="appsTab">
+      <div class="form-card">
+        <h2>➕ 添加AI应用</h2>
+        <form id="appForm">
+          <div class="form-group">
+            <label>应用名称 * (三语言)</label>
+            <div class="form-row">
+              <div class="form-group">
+                <label>🇯🇵 日本語</label>
+                <input type="text" name="name_ja" placeholder="例: フィットフォーカス AI" required>
+              </div>
+              <div class="form-group">
+                <label>🇨🇳 中文</label>
+                <input type="text" name="name_zh" placeholder="例: FitFocus AI" required>
+              </div>
+              <div class="form-group">
+                <label>🇺🇸 English</label>
+                <input type="text" name="name_en" placeholder="e.g.: FitFocus AI" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>应用图标 (Emoji) *</label>
+              <input type="text" name="icon" placeholder="⚡" maxlength="2" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>应用类型 *</label>
+              <select name="type" required>
+                <option value="">请选择</option>
+                <option value="webapp">Web应用</option>
+                <option value="native">原生应用</option>
+                <option value="suite">工具套件</option>
+                <option value="skill">Claude技能</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>在线演示链接</label>
+              <input type="url" name="link" placeholder="应用URL (可选)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>技术标签 (用逗号分隔)</label>
+            <input type="text" name="tags" placeholder="例如: React, TypeScript, AI">
+          </div>
+
+          <button type="submit" class="btn-save">💾 保存并发布</button>
+          <div class="success-message" id="appSuccess">✅ 应用已成功添加!</div>
+        </form>
+      </div>
+
+      <!-- 已发布应用列表 -->
+      <div class="form-card">
+        <h2>📱 已发布的应用</h2>
+        <div class="works-list" id="appsList">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./admin-logic.js"></script>
+</body>
+</html>

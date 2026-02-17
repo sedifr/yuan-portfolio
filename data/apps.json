@@ -1,0 +1,62 @@
+{
+  "apps": [
+    {
+      "id": "fitfocus",
+      "name": {
+        "ja": "フィットフォーカス AI",
+        "zh": "FitFocus AI",
+        "en": "FitFocus AI"
+      },
+      "type": "webapp",
+      "icon": "⚡",
+      "previewBg": "preview-1",
+      "link": "https://fitfocus-ai-smart-body-transformation-658857762386.us-west1.run.app/",
+      "isLive": true,
+      "tags": ["Gemini AI", "React", "TypeScript", "Computer Vision"],
+      "delay": 0
+    },
+    {
+      "id": "nano",
+      "name": {
+        "ja": "ナノスタジオ",
+        "zh": "Nano Studio",
+        "en": "Nano Studio"
+      },
+      "type": "suite",
+      "icon": "🎬",
+      "previewBg": "preview-2",
+      "link": "https://nano-studio-658857762386.us-west1.run.app",
+      "isLive": true,
+      "tags": ["Gemini AI", "Veo", "Video Gen", "Storyboard"],
+      "delay": 0.1
+    },
+    {
+      "id": "voice",
+      "name": {
+        "ja": "音声認識アシスタント",
+        "zh": "语音识别助手",
+        "en": "Voice Recognition Assistant"
+      },
+      "type": "native",
+      "icon": "🎙️",
+      "previewBg": "preview-3",
+      "tags": ["Swift", "SwiftUI", "Speech Recognition", "Anthropic AI"],
+      "delay": 0.2
+    },
+    {
+      "id": "storyboard",
+      "name": {
+        "ja": "ストーリーボード ディレクター",
+        "zh": "分镜导演",
+        "en": "Storyboard Director"
+      },
+      "type": "skill",
+      "icon": "🎞️",
+      "previewBg": "preview-4",
+      "link": "https://github.com/sedifr/skills",
+      "badgeType": "github",
+      "tags": ["Skills CLI", "State Machine", "Workflow", "Image Gen"],
+      "delay": 0.3
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "videos": [
+    {
+      "id": "mayu",
+      "title": {
+        "ja": "繭の少年",
+        "zh": "茧中少年",
+        "en": "The Boy in the Cocoon"
+      },
+      "type": "shortfilm",
+      "layout": "portrait",
+      "cover": "./assets/images/covers/poster-mayu.jpg",
+      "fallbackCover": "https://img.youtube.com/vi/Wn1P1zVL1EI/maxresdefault.jpg",
+      "link": "https://youtu.be/Wn1P1zVL1EI",
+      "roles": ["director", "script", "cinematography", "editing"],
+      "delay": 2
+    },
+    {
+      "id": "hanabi",
+      "title": {
+        "ja": "花火",
+        "zh": "烟花",
+        "en": "Fireworks"
+      },
+      "type": "shortfilm",
+      "layout": "crop-bars",
+      "cover": "https://img.youtube.com/vi/f97yG2BkWUA/maxresdefault.jpg",
+      "link": "https://youtu.be/f97yG2BkWUA",
+      "roles": ["editing", "color"],
+      "delay": 3
+    },
+    {
+      "id": "chengdu",
+      "title": {
+        "ja": "成都態度",
+        "zh": "成都态度",
+        "en": "Chengdu Attitude"
+      },
+      "type": "documentary",
+      "layout": "crop-bars",
+      "cover": "./assets/images/covers/chengdu-cover.jpg",
+      "fallbackCover": "https://img.youtube.com/vi/kJ17eGXNx3w/maxresdefault.jpg",
+      "link": "https://youtu.be/kJ17eGXNx3w",
+      "roles": ["director", "editing"],
+      "delay": 4
+    },
+    {
+      "id": "kyodai",
+      "title": {
+        "ja": "兄たちの愛が遅すぎて困ります",
+        "zh": "哥哥们的爱来得太晚",
+        "en": "My Brothers' Love Came Too Late"
+      },
+      "type": "shortdrama",
+      "layout": "portrait",
+      "cover": "./assets/images/covers/kyodai-drama-cover.jpg",
+      "link": "https://www.threads.com/@chabimachi/post/DGqWjcxTwp3/",
+      "roles": ["editing"],
+      "delay": 5
+    },
+    {
+      "id": "unmei",
+      "title": {
+        "ja": "運命の悪戯　許されざる愛",
+        "zh": "命运的捉弄 不被允许的爱",
+        "en": "Fate's Trick - Forbidden Love"
+      },
+      "type": "shortdrama",
+      "layout": "portrait",
+      "cover": "./assets/images/covers/unmei-drama-cover.jpg",
+      "fallbackCover": "https://img.youtube.com/vi/OItlrWhrOsg/maxresdefault.jpg",
+      "link": "https://www.youtube.com/watch?v=OItlrWhrOsg",
+      "roles": ["editing"],
+      "delay": 5
+    },
+    {
+      "id": "hanatokoto",
+      "title": {
+        "ja": "花とこと",
+        "zh": "花与事",
+        "en": "Flowers and Things"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/hanatokoto/hanatokoto-05.jpg",
+      "images": [
+        "./assets/images/projects/hanatokoto/hanatokoto-05.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-06.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-07.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-08.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-09.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-01.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-02.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-03.jpg",
+        "./assets/images/projects/hanatokoto/hanatokoto-04.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    },
+    {
+      "id": "daiernichun",
+      "title": {
+        "ja": "第二の春",
+        "zh": "第二春",
+        "en": "Second Spring"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/daiernichun/daiernichun-02.jpg",
+      "images": [
+        "./assets/images/projects/daiernichun/daiernichun-02.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-03.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-04.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-05.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-06.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-07.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-08.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-09.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-10.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-11.jpg",
+        "./assets/images/projects/daiernichun/daiernichun-01.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    },
+    {
+      "id": "kiseki",
+      "title": {
+        "ja": "軌跡の彼方",
+        "zh": "轨迹的彼方",
+        "en": "Beyond the Trail"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/kiseki/kiseki-04.jpg",
+      "images": [
+        "./assets/images/projects/kiseki/kiseki-04.jpg",
+        "./assets/images/projects/kiseki/kiseki-05.jpg",
+        "./assets/images/projects/kiseki/kiseki-06.jpg",
+        "./assets/images/projects/kiseki/kiseki-01.jpg",
+        "./assets/images/projects/kiseki/kiseki-02.jpg",
+        "./assets/images/projects/kiseki/kiseki-03.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    },
+    {
+      "id": "kutsu",
+      "title": {
+        "ja": "靴",
+        "zh": "鞋",
+        "en": "Shoes"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/kutsu/kutsu-05.jpg",
+      "images": [
+        "./assets/images/projects/kutsu/kutsu-05.jpg",
+        "./assets/images/projects/kutsu/kutsu-01.jpg",
+        "./assets/images/projects/kutsu/kutsu-02.jpg",
+        "./assets/images/projects/kutsu/kutsu-03.jpg",
+        "./assets/images/projects/kutsu/kutsu-04.jpg",
+        "./assets/images/projects/kutsu/kutsu-06.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    },
+    {
+      "id": "dida",
+      "title": {
+        "ja": "時を刻む",
+        "zh": "嘀嗒",
+        "en": "Ticking"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/dida/dida-01.jpg",
+      "images": [
+        "./assets/images/projects/dida/dida-01.jpg",
+        "./assets/images/projects/dida/dida-02.jpg",
+        "./assets/images/projects/dida/dida-03.jpg",
+        "./assets/images/projects/dida/dida-04.jpg",
+        "./assets/images/projects/dida/dida-05.jpg",
+        "./assets/images/projects/dida/dida-06.jpg",
+        "./assets/images/projects/dida/dida-07.jpg",
+        "./assets/images/projects/dida/dida-08.jpg",
+        "./assets/images/projects/dida/dida-09.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    },
+    {
+      "id": "other-work",
+      "title": {
+        "ja": "その他の作品",
+        "zh": "其他作品",
+        "en": "Other Works"
+      },
+      "type": "gallery",
+      "layout": "image-only",
+      "cover": "./assets/images/projects/other-work/other-work-01.jpg",
+      "images": [
+        "./assets/images/projects/other-work/other-work-01.jpg",
+        "./assets/images/projects/other-work/other-work-02.jpg",
+        "./assets/images/projects/other-work/other-work-03.jpg",
+        "./assets/images/projects/other-work/other-work-04.jpg",
+        "./assets/images/projects/other-work/other-work-05.jpg",
+        "./assets/images/projects/other-work/other-work-06.jpg",
+        "./assets/images/projects/other-work/other-work-07.jpg",
+        "./assets/images/projects/other-work/other-work-08.jpg",
+        "./assets/images/projects/other-work/other-work-09.jpg",
+        "./assets/images/projects/other-work/other-work-10.jpg",
+        "./assets/images/projects/other-work/other-work-11.jpg",
+        "./assets/images/projects/other-work/other-work-12.jpg"
+      ],
+      "roles": ["cinematography"],
+      "delay": 5
+    }
+  ]
+}

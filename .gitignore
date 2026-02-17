@@ -1,0 +1,17 @@
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# 备份文件
+*-backup.js
+*-backup.html
+
+# 日志
+*.log
+
+# 临时文件
+*.tmp
+.fuse_hidden*

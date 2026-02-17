@@ -1,0 +1,105 @@
+🚀 袁灏作品集网站 - Vercel 自动同步版
+========================================
+
+✨ 新版本特性:
+• 后台点"保存" → 自动上线 (不需要任何手动操作!)
+• 完全免费 (Vercel + GitHub)
+• 全球加速 (比腾讯云快)
+• 永不丢图片、不卡顿
+
+
+📋 三步部署 (总共只需 10 分钟)
+========================================
+
+第一步:上传到 GitHub (3分钟)
+-------------------------------------------
+1. 登录 GitHub,创建新仓库:
+   Repository name: yuan-portfolio
+   选择 Public
+
+2. 在项目文件夹打开终端,执行:
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/你的用户名/yuan-portfolio.git
+   git push -u origin main
+
+
+第二步:创建 GitHub Token (2分钟)
+-------------------------------------------
+1. GitHub → 右上角头像 → Settings
+2. Developer settings → Personal access tokens → Tokens (classic)
+3. Generate new token (classic)
+4. 勾选 "repo" 权限
+5. 复制生成的 token (ghp_xxxx...)
+   ⚠️ 只显示一次,务必保存!
+
+
+第三步:部署到 Vercel (5分钟)
+-------------------------------------------
+1. 访问: https://vercel.com/new
+2. 导入 GitHub 仓库: yuan-portfolio
+3. 添加环境变量 (重要!):
+   GITHUB_TOKEN = ghp_你的token
+   GITHUB_OWNER = 你的GitHub用户名
+   GITHUB_REPO = yuan-portfolio
+   GITHUB_BRANCH = main
+4. 点击 Deploy
+5. 等待 1 分钟,完成!
+
+
+🎉 完成!
+========================================
+你的网站: https://你的域名.vercel.app
+管理后台: https://你的域名.vercel.app/admin.html
+密码: yuan2026
+
+
+🎯 使用方法
+========================================
+1. 打开管理后台
+2. 添加作品,填写三种语言的标题
+3. 上传封面图
+4. 点击"保存"
+5. ✅ 等 1 分钟,自动上线!
+
+完全不需要下载文件、手动上传!
+
+
+📖 详细教程
+========================================
+查看文件: VERCEL部署指南.md
+有图文详解和常见问题解答
+
+
+💡 对比腾讯云
+========================================
+              Vercel     腾讯云
+部署难度       简单       复杂
+更新流程      点保存     下载→上传
+文件夹识别     完美      经常出问题
+图片丢失       不会      偶尔会
+动效卡顿       流畅      有时卡
+版本控制       有        无
+
+
+❓ 常见问题
+========================================
+
+Q: 保存时显示"GitHub 未配置"?
+A: 检查 Vercel 环境变量是否正确设置
+
+Q: 保存后网站没更新?
+A: 等待 30-60 秒,然后强制刷新 (Ctrl+F5)
+
+Q: 图片显示不出来?
+A: 确保图片在 GitHub 的 assets/images/ 文件夹
+
+
+📞 需要帮助?
+========================================
+查看详细教程: VERCEL部署指南.md
+或者查看 Vercel 部署日志排查问题
+
+
+祝你部署成功! 🎉
