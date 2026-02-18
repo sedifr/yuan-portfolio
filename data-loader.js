@@ -274,7 +274,7 @@ function initializeGalleries() {
     const autoSlideDuration = 900; // 增加滑动时间，从760ms改为900ms，让过渡更从容
     const manualSlideEasing = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
     const autoSlideEasing = 'cubic-bezier(0.25, 1, 0.5, 1)'; // 改用更流畅的缓动曲线：开始快速，然后平滑减速
-    const autoSlideIntervalMs = 5500; // 增加停留时间，从3.6秒改为5.5秒
+    const autoSlideIntervalMs = 7000; // 总间隔7秒，扣除900ms滑动时间 = 实际静止停留6.1秒
 
     thumbWrap.classList.add('gallery-slider');
     thumb.classList.add('video-thumb-main');
