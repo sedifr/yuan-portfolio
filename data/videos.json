@@ -94,7 +94,7 @@
         "./assets/images/projects/hanatokoto/hanatokoto-03.jpg",
         "./assets/images/projects/hanatokoto/hanatokoto-04.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     },
     {
@@ -120,7 +120,7 @@
         "./assets/images/projects/daiernichun/daiernichun-11.jpg",
         "./assets/images/projects/daiernichun/daiernichun-01.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     },
     {
@@ -141,7 +141,7 @@
         "./assets/images/projects/kiseki/kiseki-02.jpg",
         "./assets/images/projects/kiseki/kiseki-03.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     },
     {
@@ -162,7 +162,7 @@
         "./assets/images/projects/kutsu/kutsu-04.jpg",
         "./assets/images/projects/kutsu/kutsu-06.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     },
     {
@@ -186,7 +186,7 @@
         "./assets/images/projects/dida/dida-08.jpg",
         "./assets/images/projects/dida/dida-09.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     },
     {
@@ -213,7 +213,7 @@
         "./assets/images/projects/other-work/other-work-11.jpg",
         "./assets/images/projects/other-work/other-work-12.jpg"
       ],
-      "roles": ["cinematography"],
+      "roles": ["color"],
       "delay": 5
     }
   ]

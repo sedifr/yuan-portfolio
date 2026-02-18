@@ -270,7 +270,11 @@ function initializeGalleries() {
     let currentIndex = 0;
     let autoSlideInterval;
     let isAnimating = false;
-    const slideDuration = 420;
+    const manualSlideDuration = 520;
+    const autoSlideDuration = 760;
+    const manualSlideEasing = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
+    const autoSlideEasing = 'cubic-bezier(0.16, 1, 0.3, 1)';
+    const autoSlideIntervalMs = 3600;
 
     thumbWrap.classList.add('gallery-slider');
     thumb.classList.add('video-thumb-main');
@@ -288,27 +292,32 @@ function initializeGalleries() {
       });
     }
 
-    function slideTo(targetIndex, direction = 1) {
+    function slideTo(targetIndex, direction = 1, options = {}) {
       if (isAnimating || targetIndex === currentIndex || !images[targetIndex]) {
         return;
       }
 
       isAnimating = true;
-      const easing = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
+      const duration = options.duration || manualSlideDuration;
+      const easing = options.easing || manualSlideEasing;
 
       slideImg.src = images[targetIndex];
       slideImg.style.transition = 'none';
       thumb.style.transition = 'none';
       slideImg.style.transform = `translateX(${direction > 0 ? 100 : -100}%)`;
       thumb.style.transform = 'translateX(0)';
+      slideImg.style.opacity = '0.96';
+      thumb.style.opacity = '1';
 
       // Force reflow so transition starts from prepared state
       void slideImg.offsetWidth;
 
-      slideImg.style.transition = `transform ${slideDuration}ms ${easing}`;
-      thumb.style.transition = `transform ${slideDuration}ms ${easing}`;
+      slideImg.style.transition = `transform ${duration}ms ${easing}, opacity ${duration}ms ${easing}`;
+      thumb.style.transition = `transform ${duration}ms ${easing}, opacity ${duration}ms ${easing}`;
       slideImg.style.transform = 'translateX(0)';
+      slideImg.style.opacity = '1';
       thumb.style.transform = `translateX(${direction > 0 ? -100 : 100}%)`;
+      thumb.style.opacity = '0.92';
 
       window.setTimeout(() => {
         currentIndex = targetIndex;
@@ -316,10 +325,12 @@ function initializeGalleries() {
         thumb.style.transition = 'none';
         slideImg.style.transition = 'none';
         thumb.style.transform = 'translateX(0)';
+        thumb.style.opacity = '1';
         slideImg.style.transform = `translateX(${direction > 0 ? 100 : -100}%)`;
+        slideImg.style.opacity = '1';
         updateDots(currentIndex);
         isAnimating = false;
-      }, slideDuration + 40);
+      }, duration + 60);
     }
 
     // 自动轮播
@@ -332,8 +343,11 @@ function initializeGalleries() {
 
       autoSlideInterval = setInterval(() => {
         const nextIndex = (currentIndex + 1) % images.length;
-        slideTo(nextIndex, 1);
-      }, 3000);
+        slideTo(nextIndex, 1, {
+          duration: autoSlideDuration,
+          easing: autoSlideEasing
+        });
+      }, autoSlideIntervalMs);
     }
 
     function stopAutoSlide() {
@@ -350,7 +364,10 @@ function initializeGalleries() {
       dot.addEventListener('click', (e) => {
         e.stopPropagation();
         const direction = index > currentIndex ? 1 : -1;
-        slideTo(index, direction);
+        slideTo(index, direction, {
+          duration: manualSlideDuration,
+          easing: manualSlideEasing
+        });
         stopAutoSlide();
         startAutoSlide();
       });
